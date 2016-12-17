@@ -5,19 +5,32 @@ db = pg.DB(dbname='page_db')
 
 app = Flask('mywiki')
 
-@app.route('/<page_name>/edit', methods=['POST'])
-def update_form(page_name):
+# @app.route('/<page_name>/edit', methods=['POST'])
+# def update_form(page_name):
+#     title = page_name
+#     page_content = request.form.get('page_content')
+#     last_modified_date = request.form.get('last_modified_date')
+#     author_last_modified = request.form.get('author_last_modified')
+#     db.insert(
+#         'page',
+#         title=title,
+#         page_content=page_content,
+#         last_modified_date=last_modified_date,
+#         author_last_modified=author_last_modified)
+#     return redirect('/')
+
+@app.route('/<page_name>/save', methods=['POST'])
+def submit_new_page(page_name):
     title = page_name
     page_content = request.form.get('page_content')
     last_modified_date = request.form.get('last_modified_date')
     author_last_modified = request.form.get('author_last_modified')
     db.insert(
         'page',
-        title=title,
+        title,
         page_content=page_content,
         last_modified_date=last_modified_date,
         author_last_modified=author_last_modified)
-    return redirect('/')
 # @app.route('/<page_name>')
 # def placeholder():
 #     page_title = request.query_string

@@ -30,18 +30,17 @@ def update_form(page_name):
     sql = "SELECT COUNT(1) FROM page WHERE title = '%s'" %title
     cur.execute(sql)
     if cur.fetchone()[0]:
-        query = 'select title,page_content,last_modified_date,author_last_modified from page where title = %s' % title
+        query = 'select page_content,last_modified_date,author_last_modified from page where title = %s' % title
         cur.execute(query)
         entry = cur.fetchone()
-        title = entry[0]
         page_content = entry[1]
         last_modified_date = entry[2]
         author_last_modified = entry[3]
 
         return render_template(
-            'edit.html',
-            page_title='Edit Page',
-            title=title,
+            'view.html',
+            page_title=page_name,
+            title=page_name,
             page_content=page_content,
             last_modified_date=last_modified_date,
             author_last_modified=author_last_modified)
@@ -49,9 +48,19 @@ def update_form(page_name):
         return render_template(
             'edit.html',
             page_title='Edit Page',
-            title=title,
+            title=page_name,
         )
-
+@app.route('/<page_name>/save', methods=['POST'])
+def submit_new_page(page_name):
+    title = page_name
+    page_content = request.form.get('page_content')
+    last_modified_date = request.form.get('last_modified_date')
+    author_last_modified = request.form.get('author_last_modified')
+    query = (
+    "insert into page (title, page_content, last_modified_date, author_last_modified) values(\"%s\", \"%s\", \"%s\", \"%s\")" % (title, page_content, last_modified_date, author_last_modified))
+    cur.execute(query)
+    conn.commit()
+    return render_template("/\"%s\"") % page_name
 
 if __name__ == "__main__":
     app.run(debug=True)

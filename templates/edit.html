@@ -1,9 +1,9 @@
 {% extends "layout.html" %}
 {% block body %}
 <h1>Update Page for {{ title }}</h1>
-<form action="/{{page_name}}/save" method="POST">
+<form action='/{{title}}/save' method="POST">
     <input type="hidden" name="title" value="{{title}}">
-    <textarea autofocus rows="20" cols="100"  placeholder="Type Page Content"></textarea>
+    <textarea name="page_content" rows="20" cols="100"  placeholder="Type Page Content"></textarea>
     <p>
         <label for="last_modified_date">Last Modified Date </label><br>
         <input type="datetime-local" size="60" name="last_modified_date" value="{{last_modified_date}}" required>
