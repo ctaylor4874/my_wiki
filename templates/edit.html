@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+{% block body %}
+<h1>Update Page for {{ title }}</h1>
+<form action="/{{page_name}}/save" method="POST">
+    <input type="hidden" name="title" value="{{title}}">
+    <textarea autofocus rows="20" cols="100"  placeholder="Type Page Content"></textarea>
+    <p>
+        <label for="last_modified_date">Last Modified Date </label><br>
+        <input type="datetime-local" size="60" name="last_modified_date" value="{{last_modified_date}}" required>
+
+        <label for="author_last_modified">Author Name</label>
+        <input type="text" size="60" name="author_last_modified" value="{{author_last_modified}}" required>
+    </p>
+    <p>
+        <button type="submit">Update Page</button>
+    </p>
+</form>
+
+<!--<form action="/delete_entry" method="POST">-->
+    <!--<input type="hidden" name="id" value="{{id}}">-->
+    <!--<input type="hidden" name="name" value="{{name}}">-->
+    <!--<input type="hidden" name="phone_number" value="{{phone_number}}">-->
+    <!--<input type="hidden" name="email" value="{{email}}">-->
+    <!--<button type="submit">Delete Entry</button>-->
+<!--</form>-->
+
+{% endblock %}

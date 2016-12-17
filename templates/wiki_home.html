@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+{% block body %}
+<div>
+    <title>{{title}}</title>
+    <ul>
+        {% for id, title in title_list %}
+            <li>{{title}}</li>
+        {% endfor %}
+    </ul>
+
+</div>
+{% endblock %}
