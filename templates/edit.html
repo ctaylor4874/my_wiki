@@ -3,7 +3,7 @@
 <h1>Update Page for {{ title }}</h1>
 <form action='/{{title}}/save' method="POST">
     <input type="hidden" name="title" value="{{title}}">
-    <textarea name="page_content" rows="20" cols="100"  placeholder="Type Page Content"></textarea>
+    <textarea name="page_content" rows="20" cols="100" placeholder="Type Page Content"></textarea>
     <p>
         <label for="last_modified_date">Last Modified Date </label><br>
         <input type="datetime-local" size="60" name="last_modified_date" value="{{last_modified_date}}" required>
@@ -17,11 +17,11 @@
 </form>
 
 <!--<form action="/delete_entry" method="POST">-->
-    <!--<input type="hidden" name="id" value="{{id}}">-->
-    <!--<input type="hidden" name="name" value="{{name}}">-->
-    <!--<input type="hidden" name="phone_number" value="{{phone_number}}">-->
-    <!--<input type="hidden" name="email" value="{{email}}">-->
-    <!--<button type="submit">Delete Entry</button>-->
+<!--<input type="hidden" name="id" value="{{id}}">-->
+<!--<input type="hidden" name="name" value="{{name}}">-->
+<!--<input type="hidden" name="phone_number" value="{{phone_number}}">-->
+<!--<input type="hidden" name="email" value="{{email}}">-->
+<!--<button type="submit">Delete Entry</button>-->
 <!--</form>-->
 
 {% endblock %}
