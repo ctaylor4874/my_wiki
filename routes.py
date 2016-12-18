@@ -20,7 +20,26 @@ def home():
 
 @app.route('/<page_name>')
 def placeholder(page_name):
-    return render_template('placeholder.html', title = page_name)
+    title = page_name
+    sql = "SELECT COUNT(1) FROM page WHERE title = '%s'" % title
+    cur.execute(sql)
+    if cur.fetchone()[0]:
+        query = "select page_content,last_modified_date,author_last_modified from page where title = '%s'" % title
+        cur.execute(query)
+        entry = cur.fetchone()
+        page_content = entry[0]
+        last_modified_date = entry[1]
+        author_last_modified = entry[2]
+
+        return render_template(
+            'view.html',
+            page_title=page_name,
+            title=page_name,
+            page_content=page_content,
+            last_modified_date=last_modified_date,
+            author_last_modified=author_last_modified)
+    else:
+        return render_template('placeholder.html', title = page_name)
 
 @app.route('/<page_name>/edit')
 def update_form(page_name):
@@ -60,7 +79,12 @@ def submit_new_page(page_name):
     "insert into page (title, page_content, last_modified_date, author_last_modified) values(\"%s\", \"%s\", \"%s\", \"%s\")" % (title, page_content, last_modified_date, author_last_modified))
     cur.execute(query)
     conn.commit()
-    return render_template("/\"%s\"") % page_name
+    return render_template(
+        "/view",
+        title = page_name,
+        page_content = page_content,
+        last_modified_date=last_modified_date,
+        author_last_modified=author_last_modified)
 
 if __name__ == "__main__":
     app.run(debug=True)
