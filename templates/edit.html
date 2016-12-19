@@ -3,11 +3,8 @@
 <h1>Update Page for {{ title }}</h1>
 <form action='/{{title}}/save' method="POST">
     <input type="hidden" name="title" value="{{title}}">
-    <textarea name="page_content" rows="20" cols="100" placeholder="Type Page Content"></textarea>
+    <textarea name="page_content" rows="20" cols="100" placeholder="Type Page Content">{{page_content}}</textarea>
     <p>
-        <label for="last_modified_date">Last Modified Date </label><br>
-        <input type="datetime-local" size="60" name="last_modified_date" value="{{last_modified_date}}" required>
-
         <label for="author_last_modified">Author Name</label>
         <input type="text" size="60" name="author_last_modified" value="{{author_last_modified}}" required>
     </p>
