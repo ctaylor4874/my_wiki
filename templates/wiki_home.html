@@ -1,10 +1,11 @@
+
 {% extends "layout.html" %}
 {% block body %}
 <div>
     <title>{{title}}</title>
     <ul>
         {% for title in title_list %}
-        <li>{{title}}</li>
+        <li><a href="/{{title}}">{{title}}</a></li>
         {% endfor %}
     </ul>
 

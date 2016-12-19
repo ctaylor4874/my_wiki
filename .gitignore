@@ -55,5 +55,4 @@ static/
 .idea/tasks.xml
 dbconfig.pyc
 wiki_linkify.pyc
-/page.py
 page.pyc

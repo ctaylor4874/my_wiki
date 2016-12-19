@@ -2,6 +2,8 @@ from flask import Flask, render_template, request, redirect
 from wiki_linkify import wiki_linkify
 from jinja2 import Environment, FileSystemLoader
 from page import *
+import markdown
+from flask import Markup
 
 app = Flask('mywiki')
 
@@ -17,7 +19,9 @@ def placeholder(page_name):
     page = Page()
     page.title = page_name
     exists = page.placeHolder()
+
     if exists:
+        page.page_content = Markup(markdown.markdown(page.page_content))
         return view.render(
             page_title=page.title,
             title=page.title,
@@ -56,6 +60,7 @@ def save(page_name):
     page.page_content = request.form.get('page_content')
     page.author_last_modified = request.form.get('author_last_modified')
     page.save()
+    page.page_content = Markup(markdown.markdown(page.page_content))
     return view.render(
         title=page.title,
         page_content=page.page_content,

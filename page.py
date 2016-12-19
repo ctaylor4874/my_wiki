@@ -1,7 +1,6 @@
 import mysql.connector
 import dbconfig
 
-
 class Page:
     def placeHolder(self):
         exists = Database.checkTitles(self.title)
@@ -49,7 +48,7 @@ class Page:
         pages = []
         result_set = Database.getResult(query)
         for item in result_set:
-            pages.append(item)
+            pages.append(item[0])
         return pages
 
 
