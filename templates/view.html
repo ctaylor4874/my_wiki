@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 {% block body %}
-<h1>{{ title }}</a></h1>
+<h1>{{ title }}</h1>
 {{wiki_linkify | safe}}
 <p>{{page_content | wiki_linkify}}</p>
 <p>Page last modified on {{last_modified_date}} by {{author_last_modified}}</p>
