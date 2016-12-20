@@ -58,10 +58,8 @@ class Page:
         query = "SELECT last_modified_date, revisionid FROM pagehistory WHERE pageid = %d" % (pageid)
         archives = {}
         list = Database.getResult(query)
-        print list
         for item in list:
             archives.update({item[0]: item[1]})
-            print archives
         return archives
 
     @staticmethod
@@ -80,12 +78,9 @@ class Page:
 
     @staticmethod
     def getObjects():
-        query = "SELECT title FROM page"
-        pages = []
+        query = "SELECT title,author_last_modified,last_modified_date FROM page"
         result_set = Database.getResult(query)
-        for item in result_set:
-            pages.append(item[0])
-        return pages
+        return result_set
 
 
 class Database(object):

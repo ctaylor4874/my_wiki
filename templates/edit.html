@@ -1,4 +1,22 @@
 {% extends "layout.html" %}
+{% block nav %}
+<div class="nav">
+    <nav class="navbar navbar-default .navbar-static-top container-fluid">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/">Wiki</a>
+            </div>
+            <button type="button" class="btn btn-default navbar-btn navbar-right"><a href="/">Home</a></button>
+
+            <ul class="nav nav-tabs navbar-left">
+                <li role="presentation"><a href="/{{title}}">{{title}}</a></li>
+                <li role="presentation"><a href="/{{title}}/archives">View Archives</a></li>
+                <li role="presentation" class="active"><a href="#">Edit This Page</a></li>
+            </ul>
+        </div>
+    </nav>
+</div>
+{% endblock %}
 {% block body %}
 <h1>Update Page for {{ title }}</h1>
 <form action='/{{title}}/save' method="POST">

@@ -10,9 +10,17 @@ app = Flask('mywiki')
 
 @app.route("/")
 def home():
-    list = Page.getObjects()
-    return render_template("wiki_home.html", title_list=list, title="Wiki Pages")
-
+    homeContent = Page.getObjects()
+    titlesDict = {}
+    for item in homeContent:
+        titlesDict[item[0]] = [item[0]]
+        titlesDict[item[0]].append(item[1])
+        titlesDict[item[0]].append(item[2])
+    return render_template(
+        'wiki_home.html',
+        title = 'Wiki',
+        titlesDict=titlesDict
+    )
 
 @app.route('/<page_name>')
 def placeholder(page_name):
