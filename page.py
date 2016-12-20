@@ -1,11 +1,12 @@
 import mysql.connector
 import dbconfig
 
+
 class Page:
     def placeHolder(self):
         exists = Database.checkTitles(self.title)
         if exists:
-            query = "select page_content,last_modified_date,author_last_modified from page where title = '%s'" % self.title
+            query = "select page_content,last_modified_date,author_last_modified, id from page where title = '%s'" % self.title
             entry = Database.getAll(query)
             self.page_content = entry[0]
             self.last_modified_date = entry[1]
@@ -18,20 +19,30 @@ class Page:
             query = "UPDATE page SET page_content = '%s', author_last_modified = '%s', last_modified_date = now() WHERE title = '%s'" % (
                 Database.escape(self.page_content), Database.escape(self.author_last_modified), self.title)
             Database.doQuery(query)
-            query = "select page_content,last_modified_date,author_last_modified from page where title = '%s'" % self.title
+            query = "select page_content,last_modified_date,author_last_modified, id from page where title = '%s'" % self.title
             entry = Database.getAll(query)
             self.page_content = entry[0]
             self.last_modified_date = entry[1]
             self.author_last_modified = entry[2]
+            self.id = entry[3]
+            self.pageid = self.id
+            query = "insert into pagehistory (title, page_content, author_last_modified, last_modified_date, pageid) values('%s', '%s', '%s',now(), %d)" % (
+                self.title, Database.escape(self.page_content), Database.escape(self.author_last_modified), self.pageid)
+            Database.doQuery(query)
         else:
             query = "insert into page (title, page_content, author_last_modified, last_modified_date) values('%s', '%s', '%s',now())" % (
                 self.title, Database.escape(self.page_content), Database.escape(self.author_last_modified))
             Database.doQuery(query)
-            query = "select page_content,last_modified_date,author_last_modified from page where title = '%s'" % self.title
+            query = "select page_content,last_modified_date,author_last_modified,id from page where title = '%s'" % self.title
             entry = Database.getAll(query)
             self.page_content = entry[0]
             self.last_modified_date = entry[1]
             self.author_last_modified = entry[2]
+            self.id = entry[3]
+            self.pageid = self.id
+            query = "insert into pagehistory (title, page_content, author_last_modified, last_modified_date, pageid) values('%s', '%s', '%s',now(), %d)" % (
+                self.title, Database.escape(self.page_content), Database.escape(self.author_last_modified), self.pageid)
+            Database.doQuery(query)
 
     def update(self):
         exists = Database.checkTitles(self.title)
@@ -39,8 +50,8 @@ class Page:
             query = "select page_content from page where title = '%s'" % self.title
             self.page_content = Database.getContent(query)
 
-    def __str__(self):
-        return self.name
+    # def __str__(self):
+    #     return self.name
 
     @staticmethod
     def getObjects():

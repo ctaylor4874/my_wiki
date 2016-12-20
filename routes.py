@@ -27,7 +27,8 @@ def placeholder(page_name):
             title=page.title,
             page_content=page.page_content,
             last_modified_date=page.last_modified_date,
-            author_last_modified=page.author_last_modified)
+            author_last_modified=page.author_last_modified,
+        )
     else:
         return render_template('placeholder.html', title=page.title)
 
@@ -56,9 +57,11 @@ def update_form(page_name):
 @app.route('/<page_name>/save', methods=['POST', 'GET'])
 def save(page_name):
     page = Page()
+    page.id = request.form.get('id')
     page.title = page_name
     page.page_content = request.form.get('page_content')
     page.author_last_modified = request.form.get('author_last_modified')
+    page.pageid = page.id
     page.save()
     page.page_content = Markup(markdown.markdown(page.page_content))
     return view.render(

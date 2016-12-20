@@ -3,6 +3,8 @@
 <h1>Update Page for {{ title }}</h1>
 <form action='/{{title}}/save' method="POST">
     <input type="hidden" name="title" value="{{title}}">
+    <!--<input type="hidden" name="id" value="{{id}}">-->
+
     <textarea name="page_content" rows="20" cols="100" placeholder="Type Page Content">{{page_content}}</textarea>
     <p>
         <label for="author_last_modified">Author Name</label>
