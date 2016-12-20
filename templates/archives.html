@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+{% block body %}
+<div>
+    <title>{{title}}</title>
+    <ul>
+        {% for titleArch, revisionid in title_list.iteritems() %}
+        <li><a href="/{{title}}/archives/{{revisionid}}">{{title}} Wiki - Modified: {{titleArch}}</a></li>
+        {% endfor %}
+    </ul>
+
+</div>
+{% endblock %}

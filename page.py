@@ -50,6 +50,31 @@ class Page:
             query = "select page_content from page where title = '%s'" % self.title
             self.page_content = Database.getContent(query)
 
+    @staticmethod
+    def getArchives(page_name):
+        query = "SELECT id FROM page WHERE title = '%s'" % (page_name)
+        id = Database.getResult(query)
+        pageid = id[0]
+        query = "SELECT last_modified_date, revisionid FROM pagehistory WHERE pageid = %d" % (pageid)
+        archives = {}
+        list = Database.getResult(query)
+        print list
+        for item in list:
+            archives.update({item[0]: item[1]})
+            print archives
+        return archives
+
+    @staticmethod
+    def archiveContent(revisionid):
+        print revisionid
+        archiveContent = {}
+        query = "select page_content,author_last_modified,last_modified_date from pagehistory where revisionid = '%d'" % int(revisionid)
+        entry = Database.getAll(query)
+        archiveContent.update({'page_content': entry[0]})
+        archiveContent.update({'author_last_modified': entry[1]})
+        archiveContent.update({'last_modified_date': entry[2]})
+        return archiveContent
+
     # def __str__(self):
     #     return self.name
 

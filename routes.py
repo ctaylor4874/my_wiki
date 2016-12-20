@@ -70,6 +70,26 @@ def save(page_name):
         last_modified_date=page.last_modified_date,
         author_last_modified=page.author_last_modified)
 
+@app.route('/<page_name>/archives')
+def archives(page_name):
+    list = Page.getArchives(page_name)
+    return render_template(
+        "archives.html", title_list=list,  title=page_name)
+
+@app.route('/<page_name>/archives/<revisionid>')
+def archiveView(page_name, revisionid):
+    title = page_name
+    archiveContent = Page.archiveContent(revisionid)
+    page_content = archiveContent.get('page_content', None)
+    author_last_modified = archiveContent.get('author_last_modified', None)
+    last_modified_date = archiveContent.get('last_modified_date', None)
+    page_content = Markup(markdown.markdown(page_content))
+    return view.render(
+        title = title,
+        page_content = page_content,
+        author_last_modified=author_last_modified,
+        last_modified_date = last_modified_date
+    )
 
 conn = Database.getConnection()
 cur = conn.cursor()
