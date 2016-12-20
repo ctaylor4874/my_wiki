@@ -66,7 +66,8 @@ class Page:
     def archiveContent(revisionid):
         print revisionid
         archiveContent = {}
-        query = "select page_content,author_last_modified,last_modified_date from pagehistory where revisionid = '%d'" % int(revisionid)
+        query = "select page_content,author_last_modified,last_modified_date from pagehistory where revisionid = '%d'" % int(
+            revisionid)
         entry = Database.getAll(query)
         archiveContent.update({'page_content': entry[0]})
         archiveContent.update({'author_last_modified': entry[1]})
