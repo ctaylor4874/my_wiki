@@ -11,27 +11,16 @@
             <ul class="nav nav-tabs navbar-left">
                 <li role="tab"><a href="/">{{title}}</a></li>
                 <li role="tab"><a href="/{{title}}/archives">View Page History</a></li>
-                <li role="tab" class="active"><a href="/{{title}}/login_page">Edit This Page</a></li>
-                <li role="tab"><a href="/logout">Logout</a></li>
+                <li role="tab"><a href="/{{title}}/login_page">Edit This Page</a></li>
+                <li role="tab" class="active"><a href="/logout">Logout</a></li>
             </ul>
         </div>
     </nav>
 </div>
 {% endblock %}
 {% block body %}
-<h1>Enter Username and Password</h1>
-<form action='/{{title}}/login' method="POST">
-    <input type="hidden" name="title" value="{{title}}">
+<h1>You are successfully logged out!</h1>
     <p>
-        <label>Username</label>
-        <input type="text" size="60" name="username" value="{{username}}" required>
+        <button type="button"><a href="/">Home</a></button>
     </p>
-    <p>
-        <label>Password</label>
-        <input type="text" size="60" name="password" value="{{password}}" required>
-    </p>
-    <p>
-        <button type="submit">Submit</button>
-    </p>
-</form>
 {% endblock %}

@@ -31,6 +31,7 @@ def placeholder(page_name):
 
     if exists:
         page.page_content = Markup(markdown.markdown(page.page_content))
+        print page.page_content
         return view.render(
             page_title=page.title,
             title=page.title,
@@ -40,16 +41,18 @@ def placeholder(page_name):
         )
     else:
         return render_template('placeholder.html', title=page.title)
+@app.route('/logout')
+def logout():
+    session.clear()
+    return render_template(
+        'logout.html'
+    )
 @app.route('/<page_name>/login_page', methods=['POST', 'GET'])
 def login_page(page_name):
     page = Page()
     page.title = page_name
     if session:
-        return render_template(
-            "edit.html",
-            page_title=page.title,
-            title=page.title,
-        )
+        return redirect('/%s/edit' % page.title)
     else:
         return render_template(
             "login.html",
@@ -66,11 +69,7 @@ def login(page_name):
     if len(result_dict):
         if result_dict['password'] == page.password:
             session['username'] = result_dict['username']
-            return render_template(
-                "edit.html",
-                page_title=page.title,
-                title=page.title,
-            )
+            return redirect('/%s/edit' % page.title)
     else:
         return render_template(
             "login.html",
