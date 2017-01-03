@@ -1,3 +1,5 @@
+# dbUser = 'ctaylor'
+# dbPassword = 'CBTpass2323'
 dbUser = 'root'
 dbPassword = ''
 dbHost = '127.0.0.1'

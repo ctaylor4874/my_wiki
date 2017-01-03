@@ -4,9 +4,9 @@ from jinja2 import Environment, FileSystemLoader
 from page import *
 import markdown
 from flask import Markup
+from flask import Flask, session
 
 app = Flask('mywiki')
-
 
 @app.route("/")
 def home():
@@ -40,7 +40,44 @@ def placeholder(page_name):
         )
     else:
         return render_template('placeholder.html', title=page.title)
-
+@app.route('/<page_name>/login_page', methods=['POST', 'GET'])
+def login_page(page_name):
+    page = Page()
+    page.title = page_name
+    if session:
+        return render_template(
+            "edit.html",
+            page_title=page.title,
+            title=page.title,
+        )
+    else:
+        return render_template(
+            "login.html",
+            page_title=page.title,
+            title=page.title
+    )
+@app.route('/<page_name>/login', methods=['POST', 'GET'])
+def login(page_name):
+    page = Page()
+    page.title = page_name
+    page.username = request.form.get('username')
+    page.password = request.form.get('password')
+    result_dict = page.login()
+    if len(result_dict):
+        if result_dict['password'] == page.password:
+            session['username'] = result_dict['username']
+            return render_template(
+                "edit.html",
+                page_title=page.title,
+                title=page.title,
+            )
+    else:
+        return render_template(
+            "login.html",
+            page_title=page.title,
+            title=page.title
+        )
+app.secret_key = 'hello there'
 
 @app.route('/<page_name>/edit')
 def update_form(page_name):
@@ -103,16 +140,16 @@ def archiveView(page_name, revisionid):
     )
 
 
-conn = Database.getConnection()
-cur = conn.cursor()
+# conn = Database.getConnection()
+# cur = conn.cursor()
 env = Environment(loader=FileSystemLoader('templates'))
 env.filters['wiki_linkify'] = wiki_linkify
 view = env.get_template('view.html')
-cur.close()
-conn.close()
+# cur.close()
+# conn.close()
 
 if __name__ == "__main__":
     app.run(debug=True)
-cur.close()
-
-conn.close()
+# cur.close()
+#
+# conn.close()

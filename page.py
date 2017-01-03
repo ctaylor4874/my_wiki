@@ -13,6 +13,15 @@ class Page:
             self.author_last_modified = entry[2]
         return exists
 
+    def login(self):
+        query = ("select username, password from login where username = '%s'" % self.username)
+        result_list = Database.getAll(query)
+        login_dict = {}
+        if result_list != None:
+            login_dict.update({'username': result_list[0]})
+            login_dict.update({'password': result_list[1]})
+        return login_dict
+
     def save(self):
         exists = Database.checkTitles(self.title)
         if exists:
@@ -82,7 +91,6 @@ class Page:
         query = "SELECT title,author_last_modified,last_modified_date FROM page"
         result_set = Database.getResult(query)
         return result_set
-
 
 class Database(object):
     @staticmethod
