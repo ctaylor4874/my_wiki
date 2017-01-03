@@ -92,6 +92,7 @@ class Page:
         result_set = Database.getResult(query)
         return result_set
 
+
 class Database(object):
     @staticmethod
     def getConnection():

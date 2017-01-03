@@ -8,6 +8,7 @@ from flask import Flask, session
 
 app = Flask('mywiki')
 
+
 @app.route("/")
 def home():
     homeContent = Page.getObjects()
@@ -31,7 +32,6 @@ def placeholder(page_name):
 
     if exists:
         page.page_content = Markup(markdown.markdown(page.page_content))
-        print page.page_content
         return view.render(
             page_title=page.title,
             title=page.title,
@@ -41,12 +41,16 @@ def placeholder(page_name):
         )
     else:
         return render_template('placeholder.html', title=page.title)
+
+
 @app.route('/logout')
 def logout():
     session.clear()
     return render_template(
         'logout.html'
     )
+
+
 @app.route('/<page_name>/login_page', methods=['POST', 'GET'])
 def login_page(page_name):
     page = Page()
@@ -58,7 +62,9 @@ def login_page(page_name):
             "login.html",
             page_title=page.title,
             title=page.title
-    )
+        )
+
+
 @app.route('/<page_name>/login', methods=['POST', 'GET'])
 def login(page_name):
     page = Page()
@@ -76,7 +82,10 @@ def login(page_name):
             page_title=page.title,
             title=page.title
         )
+
+
 app.secret_key = 'hello there'
+
 
 @app.route('/<page_name>/edit')
 def update_form(page_name):
